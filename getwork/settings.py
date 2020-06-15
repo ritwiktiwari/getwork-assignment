@@ -59,7 +59,7 @@ ROOT_URLCONF = 'getwork.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,3 +126,14 @@ STATIC_URL = '/static/'
 
 
 AUTH_USER_MODEL = 'profiles.UserProfile'
+
+TOKEN_EXPIRED_AFTER_SECONDS = 30
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'profiles.authentication.ExpiringTokenAuthentication',  # custom authentication class
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
